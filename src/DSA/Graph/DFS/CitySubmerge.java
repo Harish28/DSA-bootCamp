@@ -1,0 +1,61 @@
+package DSA.Graph.DFS;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+//https://www.spoj.com/problems/SUBMERGE/
+public class CitySubmerge {
+    public static ArrayList<Integer>[] graph = new ArrayList[7];
+    public static int[] in = new int[7];
+    public static int[] low = new int[7];
+    public static int[] vis = new int[7];
+    public static int timer = 0;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        for(int i = 0;i<m;i++) {
+            int u = scanner.nextInt();
+            int v = scanner.nextInt();
+            add(u,v);
+        }
+        dfs(1,-1);
+    }
+
+    public static void dfs(int s,int p) {
+        vis[s] = 1;
+        in[s] = low[s] = timer++;
+        int child_count = 0;
+        for(int u : graph[s]) {
+            if(u == p) {
+                continue;
+            }
+            if(vis[u] == 1) {
+                low[s] = Math.min(low[s],in[u]);
+            } else {
+                dfs(u,s);
+                child_count++;
+                if(low[u] >= in[s] && p != -1) {
+                    System.out.println(s + " is an Articulation Point");
+                }
+                low[s] = Math.min(low[s], low[u]);
+            }
+        }
+        if(p == -1 && child_count > 1) {
+            System.out.println(p + "is an articulation point");
+        }
+    }
+
+    public static void add(int s,int d) {
+        if(graph[s] == null) {
+            graph[s] = new ArrayList<>();
+        }
+        graph[s].add(d);
+
+        if(graph[d] == null) {
+            graph[d] = new ArrayList<>();
+        }
+        graph[d].add(s);
+    }
+
+}
