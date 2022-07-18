@@ -19,7 +19,7 @@ public class QuickSort {
         }
     }
     public static int partition(int[] arr,int s,int e) {
-        int bound = s;//it always point to the next element which we have swap with if we found a smaller element then pivot on ith location
+        int bound = s;//it always points to the next element which we have swap with if we found a smaller element then pivot on ith location
         int pivot = e;
         for(int i = s;i <= e;i++) {
             if(arr[pivot] > arr[i]) {
